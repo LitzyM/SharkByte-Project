@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  <Id>PASTE_A_GUID_HERE</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Your Team</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Attendance Helper"/>
+  <Description DefaultValue="Open a task pane to tally attendees and copy accepted emails."/>
+  <IconUrl DefaultValue="PASTE_YOUR_HTTPS_URL_HERE/assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="PASTE_YOUR_HTTPS_URL_HERE/assets/icon-64.png"/>
+  <Hosts><Host Name="Mailbox"/></Hosts>
+  <Requirements><Sets DefaultMinVersion="1.10"><Set Name="Mailbox"/></Sets></Requirements>
+  <Permissions>ReadWriteMailbox</Permissions>
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Appointment" FormType="Read"/>
+    <Rule xsi:type="ItemIs" ItemType="Appointment" FormType="Edit"/>
+  </Rule>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host Name="Mailbox">
+        <Runtimes>
+          <Runtime resid="TaskPane.Url" lifetime="long"/>
+        </Runtimes>
+        <ExtensionPoint xsi:type="AppointmentOrganizerCommandSurface">
+          <OfficeTab id="TabDefault">
+            <Group id="Group.Main" label="Attendance Helper" icon="Icon.32">
+              <Control xsi:type="Button" id="Button.OpenPane"
+                       label="Open Helper" icon="Icon.32"
+                       onAction="ShowTaskPane" superTip="Open the helper"/>
+            </Group>
+          </OfficeTab>
+        </ExtensionPoint>
+        <ExtensionPoint xsi:type="AppointmentAttendeeCommandSurface">
+          <OfficeTab id="TabDefault">
+            <Group id="Group.Main.Read" label="Attendance Helper" icon="Icon.32">
+              <Control xsi:type="Button" id="Button.OpenPane.Read"
+                       label="Open Helper" icon="Icon.32"
+                       onAction="ShowTaskPane" superTip="Open the helper"/>
+            </Group>
+          </OfficeTab>
+        </ExtensionPoint>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.32" DefaultValue="PASTE_YOUR_HTTPS_URL_HERE/assets/icon-32.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="TaskPane.Url" DefaultValue="PASTE_YOUR_HTTPS_URL_HERE/index.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="PASTE_YOUR_HTTPS_URL_HERE/commands.html"/>
+      </bt:Urls>
+    </Resources>
+
+    <VersionOverrides>
+      <Hosts>
+        <Host xsi:type="Mailbox">
+          <AllFormFactors>
+            <FunctionFile resid="Commands.Url"/>
+            <ExtensionPoint xsi:type="ExecuteFunction">
+              <FunctionName>ShowTaskPane</FunctionName>
+            </ExtensionPoint>
+          </AllFormFactors>
+        </Host>
+      </Hosts>
+    </VersionOverrides>
+  </VersionOverrides>
+</OfficeApp>

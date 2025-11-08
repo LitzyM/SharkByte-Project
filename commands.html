@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+<script>
+  Office.onReady(()=>{});
+  function ShowTaskPane(event){
+    Office.addin.showAsTaskpane().then(()=>event.completed());
+  }
+</script>
+</body>
+</html>
